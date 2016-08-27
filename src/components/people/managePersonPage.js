@@ -1,10 +1,11 @@
 'use strict';
 
 var React = require('react');
+var ReactRouter = require('react-router');
+var Lifecycle = ReactRouter.Lifecycle;
 
 var PersonForm = require('./personForm');
-var PeopleActions = require('../../actions/peopleActions');
-var PeopleStore = require('../../stores/peopleStore/peopleStore');
+var PeopleApi = require('../../api/peopleApi');
 var toastr = require('toastr');
 
 var ManagePersonPage = React.createClass({
@@ -27,13 +28,13 @@ var ManagePersonPage = React.createClass({
     componentWillMount: function () {
         var personId = this.props.params.id; // From the path '/author/:id'
         if (personId) {
-            this.setState({person: PeopleStore.getPersonById(personId)});
+            this.setState({person: PeopleApi.getPersonById(personId)});
         }
     },
 
     componentDidMount() {
-        const { route } = this.props;
-        const { router } = this.context;
+        const {route} = this.props;
+        const {router} = this.context;
         router.setRouteLeaveHook(route, this.routerWillLeave)
     },
 
@@ -75,13 +76,8 @@ var ManagePersonPage = React.createClass({
             return;
         }
 
-        if (this.state.person.id) {
-            PeopleActions.updatePerson(this.state.person)
-        } else {
-            PeopleActions.createPerson(this.state.person);
-        }
-
         this.state.dirty = false;
+        PeopleApi.savePerson(this.state.person);
         toastr.success('Person saved');
         this.context.router.push('people')
     },

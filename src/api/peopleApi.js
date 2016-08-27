@@ -6,14 +6,7 @@ var _ = require('lodash');
 
 //  This would be performed on the server in a real app. Just stubbing in.
 var _generateId = function (person) {
-    var tempIds = [],
-    biggestId;
-
-    for (var i = 0; i < people.length; i++) {
-        tempIds.push(people[i].id);
-    }
-
-    return biggestId = Math.max.apply(Math, tempIds) + 1;
+    return person.firstName.toLowerCase() + '-' + person.lastName.toLowerCase();
 };
 
 var _clone = function (item) {
@@ -50,7 +43,7 @@ var PeopleApi = {
 
     deletePerson: function (id) {
         console.log('Pretend this just deleted the author from the DB via an AJAX call...');
-        _.remove(people, {id: id * 1});
+        _.remove(people, {id: id});
     }
 };
 

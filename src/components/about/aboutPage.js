@@ -8,16 +8,16 @@ var About = React.createClass({
         router: React.PropTypes.object.isRequired
     },
 
-    //componentDidMount() {
-    //    const { route } = this.props;
-    //    const { router } = this.context;
-    //    router.setRouteLeaveHook(route, this.routerWillLeave)
-    //},
-    //
-    //routerWillLeave: function () {
-    //
-    //    return 'Are you sure you want to leave this page?';
-    //},
+    componentDidMount() {
+        const {route} = this.props;
+        const {router} = this.context;
+        router.setRouteLeaveHook(route, this.routerWillLeave)
+    },
+
+    routerWillLeave: function () {
+
+        return 'Are you sure you want to leave this page?';
+    },
 
     render () {
         return (
